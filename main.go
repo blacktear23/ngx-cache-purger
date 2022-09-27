@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"time"
 )
 
 func main() {
@@ -20,10 +21,19 @@ func main() {
 		return
 	}
 
+	now := time.Now()
+	nowUnix := now.Unix()
+
 	ctx := &WalkCtx{
-		Path:   path,
-		Prefix: prefix,
+		Path:      path,
+		Prefix:    prefix,
+		StartDate: nowUnix,
 	}
 
-	walkPath(ctx)
+	fmt.Printf("Nginx Cache Path: %s\n", path)
+	fmt.Printf("Purge Key Prefix: %s\n", prefix)
+	fmt.Printf("Purge Time: %v\n", now)
+	fmt.Printf("Start Purge\n")
+
+	ctx.Walk()
 }
